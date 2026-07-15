@@ -1,0 +1,8 @@
+drive_id,company_id,role,hiring_type,ctc,minimum_cgpa,location,drive_date
+101,1,Software Engineer,Full-Time,45,8.5,Bangalore,2026-08-10
+102,2,Software Development Engineer,Full-Time,42,8.0,Hyderabad,2026-08-14
+103,3,Member of Technical Staff,Full-Time,43,8.0,Noida,2026-08-18
+104,4,Decision Analytics Associate,Full-Time,18,7.5,Gurgaon,2026-08-20
+105,5,Data Analyst,Full-Time,22,7.5,Gurgaon,2026-08-24
+106,6,Business Technology Analyst,Full-Time,14,7.0,Gurgaon,2026-08-27
+107,7,AI Engineer,Full-Time,48,8.8,Bangalore,2026-09-02

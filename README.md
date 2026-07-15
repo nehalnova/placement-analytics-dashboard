@@ -1,10 +1,10 @@
-# 📊 Placement Analytics Dashboard
+# Placement Intelligence Dashboard
 
 An end-to-end Data Analytics project that simulates a university placement season using synthetic data and analyzes placement trends through SQL and Power BI.
 
 ---
 
-## 🚀 Project Overview
+##  Project Overview
 
 This project models the complete placement lifecycle:
 

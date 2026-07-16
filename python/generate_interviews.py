@@ -1,48 +1,38 @@
 import pandas as pd
 import random
 
-applications = pd.read_csv("data/applications.csv")
+apps = pd.read_csv("data/applications.csv")
 
 rows = []
-
 round_id = 1
 
-for _, app in applications.iterrows():
+for _, app in apps.iterrows():
 
-    status = app["application_status"]
-
-    if status in ["Interviewing", "Offered", "Accepted"]:
-
-        rounds = ["Technical 1", "Technical 2", "HR"]
-
-    elif status == "OA Cleared":
-
-        rounds = ["Technical 1"]
-
-    else:
-
+    if app["application_status"] in ["Rejected"]:
         continue
 
-    for r in rounds:
+    for round_name in ["Technical 1","Technical 2","HR"]:
 
         rows.append({
 
-            "round_id": round_id,
+            "round_id":round_id,
 
-            "application_id": app["application_id"],
+            "application_id":app["application_id"],
 
-            "round_name": r,
+            "round_name":round_name,
 
-            "round_date": f"2026-09-{random.randint(1,30):02d}",
+            "round_date":
+            f"2026-09-{random.randint(1,30):02d}",
 
-            "result": "Pass"
+            "result":"Pass"
 
         })
 
-        round_id += 1
+        round_id+=1
 
-df = pd.DataFrame(rows)
+df=pd.DataFrame(rows)
 
-df.to_csv("data/interview_rounds.csv", index=False)
+df.to_csv("data/interview_rounds.csv",index=False)
 
-print("Interview rounds generated:", len(df))
+print(df.head())
+print("Interview Rounds:",len(df))

@@ -1,38 +1,43 @@
 import pandas as pd
 import random
 
-applications = pd.read_csv("data/applications.csv")
+apps = pd.read_csv("data/applications.csv")
 drives = pd.read_csv("data/placement_drives.csv")
 
 offers = []
 
-offer_id = 1
+offer_id=1
 
-for _, app in applications.iterrows():
+for _, app in apps.iterrows():
 
     if app["application_status"] not in ["Offered","Accepted"]:
         continue
 
-    drive = drives[drives["drive_id"] == app["drive_id"]].iloc[0]
+    drive = drives[
+        drives["drive_id"]==app["drive_id"]
+    ].iloc[0]
 
     offers.append({
 
-        "offer_id": offer_id,
+        "offer_id":offer_id,
 
-        "application_id": app["application_id"],
+        "application_id":app["application_id"],
 
-        "offered_ctc": drive["ctc"],
+        "offered_ctc":drive["ctc"],
 
-        "offer_date": f"2026-09-{random.randint(1,30):02d}",
+        "offer_date":
+        f"2026-09-{random.randint(1,30):02d}",
 
-        "accepted": app["application_status"]=="Accepted"
+        "accepted":
+        app["application_status"]=="Accepted"
 
     })
 
-    offer_id += 1
+    offer_id+=1
 
-df = pd.DataFrame(offers)
+df=pd.DataFrame(offers)
 
 df.to_csv("data/offers.csv",index=False)
 
-print("Offers generated:",len(df))
+print(df.head())
+print("Offers:",len(df))

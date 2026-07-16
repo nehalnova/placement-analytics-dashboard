@@ -1,50 +1,95 @@
 import random
 import pandas as pd
 
-NUM_APPLICATIONS = 45000
-NUM_STUDENTS = 5000
-
-DRIVES = list(range(101,108))      # 101-107
-
-statuses = [
-    "Applied",
-    "Resume Shortlisted",
-    "OA Cleared",
-    "Interviewing",
-    "Offered",
-    "Rejected",
-    "Accepted"
-]
+students = pd.read_csv("data/students.csv")
+drives = pd.read_csv("data/placement_drives.csv")
 
 applications = []
+application_id = 1
 
-for app_id in range(1, NUM_APPLICATIONS + 1):
+for _, student in students.iterrows():
 
-    applications.append({
+    if student["placement_status"] != "Eligible":
+        continue
 
-        "application_id": app_id,
+    possible_drives = drives[
+        drives["minimum_cgpa"] <= student["cgpa"]
+    ]
 
-        "student_id": f"ST{random.randint(1,NUM_STUDENTS):04d}",
+    if len(possible_drives) == 0:
+        continue
 
-        "drive_id": random.choice(DRIVES),
+    num_applications = random.randint(
+        min(5, len(possible_drives)),
+        min(12, len(possible_drives))
+    )
 
-        "application_date":
-            f"2026-08-{random.randint(1,30):02d}",
+    selected = possible_drives.sample(num_applications)
 
-        "application_status":
-            random.choices(
-                statuses,
-                weights=[10,20,20,15,10,20,5]
-            )[0],
+    for _, drive in selected.iterrows():
 
-        "oa_score":
-            random.randint(40,100)
+        resume_score = (
+            0.45 * student["resume_score"] +
+            0.35 * student["coding_score"] +
+            0.20 * (student["cgpa"] * 10)
+        )
 
-    })
+        if resume_score >= 82:
 
-pd.DataFrame(applications).to_csv(
-    "data/applications.csv",
-    index=False
+            oa = int(
+                max(
+                    0,
+                    min(
+                        100,
+                        student["coding_score"] + random.randint(-10, 10)
+                    )
+                )
+            )
+
+            if oa >= 70:
+
+                interview = (
+                    student["communication_score"]
+                    + random.randint(-10, 10)
+                )
+
+                if interview >= 70:
+                    status = random.choices(
+                        ["Offered", "Accepted"],
+                        weights=[20, 80]
+                    )[0]
+                else:
+                    status = "Rejected"
+
+            else:
+                status = "Rejected"
+
+        else:
+            oa = None
+            status = "Rejected"
+
+        applications.append({
+
+            "application_id": application_id,
+            "student_id": student["student_id"],
+            "drive_id": drive["drive_id"],
+            "application_date":
+                f"2026-{random.randint(8,10):02d}-{random.randint(1,28):02d}",
+            "application_status": status,
+            "oa_score": oa
+
+        })
+
+        application_id += 1
+
+df = pd.DataFrame(applications)
+
+# Force integers while keeping rejected students blank
+df["oa_score"] = df["oa_score"].apply(
+    lambda x: "" if pd.isna(x) else int(x)
 )
 
-print("applications.csv generated")
+df.to_csv("data/applications.csv", index=False)
+
+print(df.head())
+print("Applications:", len(df))

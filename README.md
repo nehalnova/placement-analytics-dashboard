@@ -41,8 +41,8 @@ The objective is to generate actionable insights that can help a university plac
 - [x] Interview round generator
 - [x] Offer generator
 - [x] Import data into PostgreSQL
-- [ ] SQL analytics queries
-- [ ] Power BI dashboard
+- [x] SQL analytics queries
+- [x] Power BI dashboard
 - [ ] Documentation
 
 ---

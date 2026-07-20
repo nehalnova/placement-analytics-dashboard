@@ -1,94 +1,100 @@
 # 📊 Placement Analytics Dashboard
 
-An end-to-end data analytics project that simulates a university placement process using synthetic data, PostgreSQL, SQL analytics, Python automation, and an interactive Power BI dashboard.
+> An end-to-end Data Analytics project that simulates a university placement ecosystem using **Python, PostgreSQL, SQL, and Power BI**.
 
-The project demonstrates the complete analytics pipeline—from designing a relational database and generating realistic datasets to querying insights with SQL and visualizing KPIs for decision-making.
+The placement process generates thousands of records every recruitment season—from student registrations and company drives to interviews and final offers. However, answering questions such as **Which companies hire the most?**, **Where do students drop off in the hiring funnel?**, or **What is the overall placement rate?** often requires combining data spread across multiple systems.
+
+To solve this, I built a complete analytics pipeline that models a realistic university placement workflow, stores it in a normalized PostgreSQL database, analyzes it using SQL, and visualizes executive KPIs in an interactive Power BI dashboard.
 
 ---
 
-# Project Overview
+# Dashboard Preview
 
-This project simulates the placement process of a university with **5,000+ students**, **150 companies**, and **250 placement drives**.
+> Interactive Executive Dashboard
 
-The complete recruitment lifecycle is modeled:
+![Dashboard]
+<img width="1869" height="1149" alt="image" src="https://github.com/user-attachments/assets/8164bbed-1c00-4c90-8d38-7d5319f84600" />
 
+
+
+---
+
+# Database Model
+
+> Relational Database Schema
+
+![Database Model]
+
+<img width="1955" height="1122" alt="Screenshot 2026-07-20 230256" src="https://github.com/user-attachments/assets/f976479d-e5d4-4cdf-8af7-fa3298359991" />
+
+
+---
+
+# Project Highlights
+
+✔ Designed a normalized PostgreSQL database with **7 interconnected tables**
+
+✔ Generated realistic synthetic datasets using **Python**
+
+✔ Simulated the complete recruitment lifecycle
+
+✔ Built analytical SQL queries to derive business insights
+
+✔ Developed an interactive Power BI dashboard with executive KPIs
+
+✔ Automated the complete data generation pipeline
+
+---
+
+# Project Architecture
+
+```
+                Python Scripts
+                       │
+                       ▼
+          Synthetic CSV Dataset Generation
+                       │
+                       ▼
+              PostgreSQL Database
+                       │
+                       ▼
+              SQL Analytics Layer
+                       │
+                       ▼
+          Interactive Power BI Dashboard
+```
+
+---
+
+# Recruitment Workflow
+
+The project models a realistic university placement process.
+
+```
 Student Registration
-→ Company Eligibility
-→ Applications
-→ Online Assessment
-→ Interview Rounds
-→ Offers
-→ Final Selection
-
-The generated data is stored in PostgreSQL and analyzed using SQL and Power BI.
-
----
-
-# Features
-
-- Relational PostgreSQL database design
-- Synthetic dataset generation using Python
-- Automated placement simulation
-- SQL analytical queries
-- Interactive Power BI dashboard
-- Placement KPI tracking
-- Hiring trend analysis
-- Offer conversion analysis
-- Branch-wise placement insights
-
----
-
-# Tech Stack
-
-| Technology | Purpose |
-|------------|----------|
-| Python | Synthetic data generation |
-| PostgreSQL | Relational database |
-| SQL | Analytics queries |
-| Power BI | Dashboard & Visualization |
-| Git | Version Control |
-| GitHub | Project Hosting |
-
----
-
-# Database Design
-
-The project contains the following tables:
-
-```
-branches
-companies
-students
-placement_drives
-applications
-interview_rounds
-offers
-```
-
-Relationships:
-
-```
-Companies
-      │
-      ▼
-Placement Drives
-      │
-      ▼
-Applications
-      │
-      ▼
+          │
+          ▼
+Eligibility Check
+          │
+          ▼
+Company Applications
+          │
+          ▼
+Online Assessment
+          │
+          ▼
 Interview Rounds
-      │
-      ▼
-Offers
-
-Students ───────────────┘
-Branches ───────────────► Students
+          │
+          ▼
+Offer Generation
+          │
+          ▼
+Final Placement
 ```
 
 ---
 
-# Dataset Statistics
+# Dataset Scale
 
 | Dataset | Records |
 |---------|---------:|
@@ -99,157 +105,259 @@ Branches ───────────────► Students
 | Interview Rounds | 34,257 |
 | Offers | 11,419 |
 
+The dataset was intentionally generated at a realistic scale to simulate the analytical challenges encountered during university placement seasons.
+
+---
+
+# Database Design
+
+The database follows a relational design consisting of seven tables.
+
+```
+Branches
+     │
+     ▼
+Students
+     │
+     ▼
+Applications
+     │
+     ▼
+Interview Rounds
+     │
+     ▼
+Offers
+
+Companies
+     │
+     ▼
+Placement Drives
+     │
+     └──────────────► Applications
+```
+
+Relationships are enforced using primary and foreign keys to maintain referential integrity across all placement stages.
+
 ---
 
 # Dashboard KPIs
 
-The dashboard includes:
+The dashboard provides executive-level metrics including:
 
-- Total Students
-- Total Companies
-- Total Placement Drives
-- Total Applications
-- Total Interview Rounds
-- Total Offers
-- Placement Rate
-- Highest Package
-- Average Package
-
-Additional Visualizations:
-
-- Application Funnel
-- Branch-wise Applications
-- Hiring Trend
-- Company-wise Hiring
-- Offer Distribution
-- Placement Analysis
+- 👨‍🎓 Total Students
+- 🏢 Total Companies
+- 📅 Total Placement Drives
+- 📝 Total Applications
+- 💼 Total Offers
+- 🎯 Placement Rate
+- 💰 Highest CTC
+- 📈 Average CTC
+- 🎤 Total Interview Rounds
 
 ---
 
-# Folder Structure
+# Business Insights
+
+The dashboard enables placement coordinators to answer questions such as:
+
+- Which branches receive the highest number of offers?
+- Which companies hire the most students?
+- What percentage of students successfully receive offers?
+- Which placement drives attract the maximum applications?
+- What is the average compensation offered?
+- Where do candidates drop off during the hiring funnel?
+- How is hiring distributed across different recruiters?
+
+---
+
+# Dashboard Visualizations
+
+The dashboard contains:
+
+- Executive KPI Cards
+- Placement Funnel
+- Branch-wise Placement Distribution
+- Company-wise Hiring Analysis
+- Offer Distribution
+- Average & Highest Package Analysis
+- Hiring Trends
+- Placement Summary
+
+---
+
+# SQL Analytics
+
+Some of the analytical queries implemented include:
+
+### Total Students
+
+```sql
+SELECT COUNT(*)
+FROM students;
+```
+
+---
+
+### Branch-wise Offers
+
+```sql
+SELECT
+    b.branch_name,
+    COUNT(o.offer_id) AS total_offers
+FROM branches b
+JOIN students s
+ON b.branch_id = s.branch_id
+JOIN applications a
+ON s.student_id = a.student_id
+JOIN offers o
+ON a.application_id = o.application_id
+GROUP BY b.branch_name
+ORDER BY total_offers DESC;
+```
+
+---
+
+### Company Hiring Rank (Window Function)
+
+```sql
+SELECT
+    c.company_name,
+    COUNT(o.offer_id) AS offers,
+    RANK() OVER(
+        ORDER BY COUNT(o.offer_id) DESC
+    ) AS hiring_rank
+FROM companies c
+JOIN placement_drives d
+ON c.company_id = d.company_id
+JOIN applications a
+ON d.drive_id = a.drive_id
+JOIN offers o
+ON a.application_id = o.application_id
+GROUP BY c.company_name;
+```
+
+---
+
+### Placement Rate
+
+```sql
+SELECT
+ROUND(
+COUNT(DISTINCT o.application_id)*100.0 /
+COUNT(DISTINCT a.application_id),
+2
+) AS placement_rate
+FROM applications a
+LEFT JOIN offers o
+ON a.application_id = o.application_id;
+```
+
+More analytical queries are available in:
 
 ```
-Placement-Analytics/
+sql/analytics_queries.sql
+```
+
+---
+
+# Engineering Challenges
+
+Some interesting engineering challenges solved during development:
+
+- Designing a normalized relational database for a realistic placement workflow.
+
+- Maintaining referential integrity while generating over **80,000+ interconnected records**.
+
+- Simulating believable recruitment behaviour using probabilistic data generation.
+
+- Building reusable Python scripts to automate dataset creation.
+
+- Creating SQL queries capable of generating executive KPIs directly from the database.
+
+- Connecting PostgreSQL with Power BI through a relational model.
+
+---
+
+# Tech Stack
+
+| Technology | Purpose |
+|------------|----------|
+| Python | Synthetic Data Generation |
+| PostgreSQL | Relational Database |
+| SQL | Data Analysis |
+| Power BI | Dashboard & Visualization |
+| Git | Version Control |
+| GitHub | Project Hosting |
+
+---
+
+# Project Structure
+
+```
+Placement-Analytics
 │
 ├── dashboard/
 │   └── Placement Analytics Dashboard.pbix
 │
 ├── data/
-│   ├── students.csv
-│   ├── companies.csv
-│   ├── placement_drives.csv
-│   ├── applications.csv
-│   ├── interview_rounds.csv
-│   └── offers.csv
-│
-├── python/
-│   ├── generate_students.py
-│   ├── generate_companies.py
-│   ├── generate_drives.py
-│   ├── generate_applications.py
-│   ├── generate_interviews.py
-│   └── generate_offers.py
-│
-├── sql/
-│   └── analytics_queries.sql
 │
 ├── docs/
-│   ├── dashboard.png
-│   └── database_model.png
+│
+├── python/
+│
+├── sql/
 │
 └── README.md
 ```
 
 ---
 
-# SQL Analytics
-
-Example insights generated using SQL:
-
-- Placement Rate
-- Average CTC
-- Highest CTC
-- Applications by Branch
-- Offers by Company
-- Interview Success Rate
-- Hiring Trend
-- Company-wise Hiring
-- Top Recruiters
-
----
-
-# Dashboard Insights
-
-The dashboard enables recruiters and placement coordinators to answer questions such as:
-
-- Which branches receive the highest number of offers?
-- Which companies recruit the most students?
-- What is the overall placement rate?
-- What is the average offered package?
-- Which placement drives attract the most applications?
-- How does hiring vary across companies?
-
----
-
-# Future Improvements
-
-- Recruiter Performance Dashboard
-- Student Skill Analytics
-- Resume Score Prediction
-- Interview Success Prediction using Machine Learning
-- Placement Forecasting
-- Interactive Filters & Drill-through Reports
-
----
-
 # How to Run
 
-## Clone Repository
+### Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/placement-analytics-dashboard.git
+git clone https://github.com/<your-username>/placement-analytics-dashboard.git
 ```
 
-## Create PostgreSQL Database
+### Create Database
 
 ```sql
 CREATE DATABASE placement_analytics;
 ```
 
-## Import CSV Files
+### Import CSV Files
 
-Import all generated CSV files into PostgreSQL.
+Import all generated CSV datasets into PostgreSQL.
 
-## Execute SQL Queries
+### Execute Analytics Queries
 
-Run:
+Run
 
 ```
 sql/analytics_queries.sql
 ```
 
-## Open Dashboard
+### Open Dashboard
 
-Open:
+Open
 
 ```
 dashboard/Placement Analytics Dashboard.pbix
 ```
 
-Refresh the data source if required.
+and refresh the PostgreSQL data source.
 
 ---
 
-# Key Learnings
+# Future Enhancements
 
-- Relational Database Design
-- Data Modeling
-- SQL Analytics
-- Synthetic Data Generation
-- Dashboard Development
-- Power BI Relationships
-- Data Visualization
-- KPI Design
+- Recruiter Performance Dashboard
+- Branch-wise Placement Benchmarking
+- Drill-through Reports
+- Historical Placement Trend Analysis
+- Incremental Data Refresh
+- Student Placement Cohort Analysis
 
 ---
 
@@ -263,4 +371,4 @@ Netaji Subhas University of Technology (NSUT)
 
 ---
 
-⭐ If you found this project interesting, consider giving it a star!
+## ⭐ If you found this project useful, consider giving it a star!

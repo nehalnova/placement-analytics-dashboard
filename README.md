@@ -41,8 +41,8 @@ The objective is to generate actionable insights that can help a university plac
 - [x] Interview round generator
 - [x] Offer generator
 - [x] Import data into PostgreSQL
-- [ ] SQL analytics queries
-- [ ] Power BI dashboard
+- [x] SQL analytics queries
+- [x] Power BI dashboard
 - [ ] Documentation
 
 ---
@@ -71,6 +71,8 @@ The objective is to generate actionable insights that can help a university plac
 - Top Recruiters
 - Offer Acceptance Rate
 - Package Distribution
+  <img width="1854" height="1046" alt="image" src="https://github.com/user-attachments/assets/34e5af73-88f0-4203-bbdb-83e4a998775b" />
+
 
 ---
 

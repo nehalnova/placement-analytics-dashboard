@@ -6,22 +6,6 @@ The project demonstrates the complete analytics pipeline—from designing a rela
 
 ---
 
-# Dashboard Preview
-
-> Add your dashboard screenshot here
-
-![Dashboard](docs/dashboard.png)
-
----
-
-# Database Schema
-
-> Add your ERD / Model View screenshot here
-
-![Database Model](docs/database_model.png)
-
----
-
 # Project Overview
 
 This project simulates the placement process of a university with **5,000+ students**, **150 companies**, and **250 placement drives**.

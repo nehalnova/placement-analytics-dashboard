@@ -23,9 +23,8 @@ To solve this, I built a complete analytics pipeline that models a realistic uni
 
 > Relational Database Schema
 
-![Database Model]
+<img width="2443" height="1023" alt="image" src="https://github.com/user-attachments/assets/fb10183f-93f3-4e34-8b7f-3c84057ad3eb" />
 
-<img width="1955" height="1122" alt="Screenshot 2026-07-20 230256" src="https://github.com/user-attachments/assets/f976479d-e5d4-4cdf-8af7-fa3298359991" />
 
 
 ---

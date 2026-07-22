@@ -11,7 +11,9 @@ To solve this, I built a complete analytics pipeline that models a realistic uni
 # Dashboard Preview
 
 > Interactive Executive Dashboard
+> <img width="1761" height="994" alt="image" src="https://github.com/user-attachments/assets/7cd9e6d2-55f1-45da-b3ce-cdfd761a46f4" />
 
+With respect to EE branch (interactive dashboard)
 <img width="1806" height="1053" alt="image" src="https://github.com/user-attachments/assets/97f85f09-8067-4946-946e-29824bb6a8eb" />
 
 

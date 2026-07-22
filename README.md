@@ -12,8 +12,8 @@ To solve this, I built a complete analytics pipeline that models a realistic uni
 
 > Interactive Executive Dashboard
 
-![Dashboard]
-<img width="1869" height="1149" alt="image" src="https://github.com/user-attachments/assets/8164bbed-1c00-4c90-8d38-7d5319f84600" />
+<img width="1806" height="1053" alt="image" src="https://github.com/user-attachments/assets/97f85f09-8067-4946-946e-29824bb6a8eb" />
+
 
 
 

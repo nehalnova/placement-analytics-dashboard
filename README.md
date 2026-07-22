@@ -1,4 +1,4 @@
-# 📊 Placement Analytics Dashboard
+# 📊 Placement Intelligence Dashboard
 
 > An end-to-end Data Analytics project that simulates a university placement ecosystem using **Python, PostgreSQL, SQL, and Power BI**.
 

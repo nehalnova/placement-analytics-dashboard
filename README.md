@@ -145,15 +145,15 @@ Relationships are enforced using primary and foreign keys to maintain referentia
 
 The dashboard provides executive-level metrics including:
 
-- 👨‍🎓 Total Students
-- 🏢 Total Companies
-- 📅 Total Placement Drives
-- 📝 Total Applications
-- 💼 Total Offers
-- 🎯 Placement Rate
-- 💰 Highest CTC
-- 📈 Average CTC
-- 🎤 Total Interview Rounds
+-  Total Students
+-  Total Companies
+-  Total Placement Drives
+-  Total Applications
+-  Total Offers
+-  Placement Rate
+-  Highest CTC
+-  Average CTC
+-  Total Interview Rounds
 
 ---
 

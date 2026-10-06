@@ -203,7 +203,7 @@ SELECT
 
 c.company_name,
 
-ROUND(AVG(package_lpa),2)
+ROUND(AVG(ctc),2) AS average_ctc
 
 FROM placement_drives d
 
@@ -213,7 +213,7 @@ ON d.company_id=c.company_id
 
 GROUP BY company_name
 
-ORDER BY AVG(package_lpa) DESC;
+ORDER BY AVG(ctc) DESC;
 
 ---------------------------------------------------------------
 
@@ -223,7 +223,7 @@ SELECT
 
 company_name,
 
-MAX(package_lpa)
+MAX(ctc) AS highest_ctc
 
 FROM placement_drives d
 
@@ -233,7 +233,7 @@ ON d.company_id=c.company_id
 
 GROUP BY company_name
 
-ORDER BY MAX(package_lpa) DESC;
+ORDER BY MAX(ctc) DESC;
 
 ---------------------------------------------------------------
 
@@ -243,7 +243,7 @@ SELECT
 
 company_name,
 
-MIN(package_lpa)
+MIN(ctc) AS lowest_ctc
 
 FROM placement_drives d
 
@@ -270,6 +270,54 @@ COUNT(*)
 FROM applications
 
 GROUP BY application_status;
+
+---------------------------------------------------------------
+
+-- Placement Rate: students with at least one offer / all students
+
+SELECT
+    ROUND(
+        100.0 * COUNT(DISTINCT s.student_id)
+            FILTER (WHERE o.offer_id IS NOT NULL)
+            / NULLIF(COUNT(DISTINCT s.student_id), 0),
+        2
+    ) AS placement_rate_pct
+FROM students s
+LEFT JOIN applications a
+    ON a.student_id = s.student_id
+LEFT JOIN offers o
+    ON o.application_id = a.application_id;
+
+---------------------------------------------------------------
+
+-- Application Conversion Rate: applications with an offer / all applications
+
+SELECT
+    ROUND(
+        100.0 * COUNT(DISTINCT o.application_id)
+            / NULLIF(COUNT(DISTINCT a.application_id), 0),
+        2
+    ) AS application_conversion_rate_pct
+FROM applications a
+LEFT JOIN offers o
+    ON o.application_id = a.application_id;
+
+---------------------------------------------------------------
+
+-- Recruitment Funnel Counts
+
+SELECT 'Applications' AS stage, COUNT(*) AS application_count
+FROM applications
+UNION ALL
+SELECT 'Assessment cleared (OA score >= 70)', COUNT(*)
+FROM applications
+WHERE oa_score >= 70
+UNION ALL
+SELECT 'Reached interview', COUNT(DISTINCT application_id)
+FROM interview_rounds
+UNION ALL
+SELECT 'Received offer', COUNT(DISTINCT application_id)
+FROM offers;
 
 ---------------------------------------------------------------
 
@@ -499,15 +547,17 @@ SELECT
 
 company_name,
 
-package_lpa,
+ctc,
 
 RANK()
 
 OVER(
 
-ORDER BY package_lpa DESC
+ORDER BY ctc DESC
 
 )
+
+AS package_rank
 
 FROM placement_drives d
 
